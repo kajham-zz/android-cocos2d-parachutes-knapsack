@@ -36,6 +36,9 @@ public class ParachuteGameLayer extends CCColorLayer {
 	private long mStartTime;
 	private CCLabel mTimerLabel;
 
+	private CCLabel mSacksRemainingLabel;
+	private int mSacksRemaining;
+
 	private static int TAG_TARGET = 1;
 	private static int TAG_PROJECTILE = 2;
 
@@ -74,8 +77,19 @@ public class ParachuteGameLayer extends CCColorLayer {
 		mTimerLabel.setColor(ccColor3B.ccBLUE);
 		addChild(mTimerLabel);
 
+		mSacksRemaining = (int) (mTimerValue / 1000);
+		mSacksRemainingLabel = CCLabel.makeLabel(
+				getSacksRemainingString((int) (mTimerValue / 1000)),
+				"DroidSans", 40.0f);
+		mSacksRemainingLabel.setPosition(CGPoint.ccp(
+				mTimerLabel.getPosition().x
+						+ mSacksRemainingLabel.getContentSize().width,
+				winSize.height - mSacksRemainingLabel.getContentSize().height));
+		mSacksRemainingLabel.setColor(ccColor3B.ccGREEN);
+		addChild(mSacksRemainingLabel);
+
 		// schedule the addition of new targets every second of the game
-		schedule("addTarget", 1.0f);
+		schedule("addTarget", 0.5f);
 
 		this.setIsTouchEnabled(true);
 
@@ -121,6 +135,14 @@ public class ParachuteGameLayer extends CCColorLayer {
 				CCMoveTo.action(actualDuration,
 						CGPoint.ccp(projectedX, projectedY)),
 				CCCallFuncN.action(this, "spriteMoveFinished")));
+
+		updateSacksRemainingLabel();
+
+		if (mSacksRemaining == 0) {
+			CCDirector.sharedDirector().replaceScene(
+					ParachuteGameOverLayer.scene(mScore));
+			return true;
+		}
 
 		return true;
 	}
@@ -252,6 +274,20 @@ public class ParachuteGameLayer extends CCColorLayer {
 		int seconds = (int) (remainingTime - minutes * 60000) / 1000;
 
 		return Integer.toString(minutes) + ":" + Integer.toString(seconds);
+	}
+
+	protected String getSacksRemainingString(int sacksRemaining) {
+		return sacksRemaining + " sacks";
+	}
+
+	protected void updateSacksRemainingLabel() {
+		mSacksRemainingLabel
+				.setString(getSacksRemainingString(--mSacksRemaining));
+		CGSize winSize = CCDirector.sharedDirector().displaySize();
+		mSacksRemainingLabel.setPosition(CGPoint.ccp(
+				mTimerLabel.getPosition().x
+						+ mSacksRemainingLabel.getContentSize().width,
+				winSize.height - mSacksRemainingLabel.getContentSize().height));
 	}
 
 	protected void updateTimer() {
