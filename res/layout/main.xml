@@ -2,11 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@android:color/white"
+    android:gravity="center" >
 
     <TextView
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
+        android:text="@string/welcome"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:layout_gravity="center_horizontal|top" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_timer_value"
+        android:textColor="@android:color/black"
+        android:gravity="center_horizontal"/>
+    
+    <EditText
+        android:id="@+id/timer_value_edit_text"
+        android:layout_height='wrap_content'
+        android:layout_width="wrap_content"
+        android:gravity="center_horizontal"/>
+    
+    <Button
+        android:id="@+id/start_game_btn"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:text="@string/new_game"
+        android:gravity="center_horizontal"/>
 
 </LinearLayout>

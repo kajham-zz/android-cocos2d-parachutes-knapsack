@@ -32,23 +32,24 @@ public class ParachuteGameLayer extends CCColorLayer {
 	private CCLabel mScoreLabel;
 	private int mScore;
 
-	private static long TIMER_VALUE = 120000L;
+	private long mTimerValue = 10000L;
 	private long mStartTime;
 	private CCLabel mTimerLabel;
 
 	private static int TAG_TARGET = 1;
 	private static int TAG_PROJECTILE = 2;
 
-	public static CCScene scene() {
+	public static CCScene scene(int timerValue) {
 		CCScene scene = CCScene.node();
 		CCLayer layer = new ParachuteGameLayer(ccColor4B.ccc4(255, 255, 255,
-				255));
+				255), timerValue);
 		scene.addChild(layer);
 		return scene;
 	}
 
-	public ParachuteGameLayer(ccColor4B color) {
+	public ParachuteGameLayer(ccColor4B color, int timerValue) {
 		super(color);
+		mTimerValue = timerValue * 1000L;
 		CGSize winSize = CCDirector.sharedDirector().displaySize();
 
 		// add the canon to the screen
@@ -242,15 +243,15 @@ public class ParachuteGameLayer extends CCColorLayer {
 
 	protected String getTimerStringValue(long currTime) {
 		long timeElapsed = currTime - mStartTime;
-		if (timeElapsed > TIMER_VALUE) {
-			return "00:00";
+		if (timeElapsed > mTimerValue) {
+			CCDirector.sharedDirector().replaceScene(
+					ParachuteGameOverLayer.scene(mScore));
 		}
-		long remainingTime = TIMER_VALUE - timeElapsed;
+		long remainingTime = mTimerValue - timeElapsed;
 		int minutes = (int) (remainingTime / 60000);
 		int seconds = (int) (remainingTime - minutes * 60000) / 1000;
 
-		return Integer.toString(minutes) + ":"
-				+ Integer.toString(seconds);
+		return Integer.toString(minutes) + ":" + Integer.toString(seconds);
 	}
 
 	protected void updateTimer() {

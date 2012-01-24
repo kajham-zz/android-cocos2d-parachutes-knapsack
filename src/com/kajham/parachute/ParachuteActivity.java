@@ -6,8 +6,12 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 public class ParachuteActivity extends Activity {
 	
@@ -28,7 +32,20 @@ public class ParachuteActivity extends Activity {
 						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		mGlSurfaceView = new CCGLSurfaceView(this);
-		setContentView(mGlSurfaceView);
+		setContentView(R.layout.main);
+		
+		Button newGame = (Button) findViewById(R.id.start_game_btn);
+		final EditText timerValueEditText = (EditText) findViewById(R.id.timer_value_edit_text);
+		newGame.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				ParachuteActivity.this.setContentView(mGlSurfaceView);
+				playGame(Integer.parseInt(timerValueEditText.getText().toString()));
+			}
+		});
+				
+    
     }
     
 	@Override
@@ -37,8 +54,10 @@ public class ParachuteActivity extends Activity {
 		CCDirector.sharedDirector().attachInView(mGlSurfaceView);
 		CCDirector.sharedDirector().setDisplayFPS(true);
 		CCDirector.sharedDirector().setAnimationInterval(1.0f / 60.0f);
+	}
 
-		CCScene scene = ParachuteGameLayer.scene();
+	private void playGame(int timerValue) {
+		CCScene scene = ParachuteGameLayer.scene(timerValue);
 		CCDirector.sharedDirector().runWithScene(scene);
 	}
 
