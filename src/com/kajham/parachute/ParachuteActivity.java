@@ -6,7 +6,6 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.app.Activity;
 import android.content.Context;
-import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -17,6 +16,10 @@ import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
+import com.kajham.parachute.utils.KeyUtils;
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 public class ParachuteActivity extends Activity {
 
@@ -36,7 +39,7 @@ public class ParachuteActivity extends Activity {
 						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN
 						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		
+
 		mGlSurfaceView = new CCGLSurfaceView(this);
 		setContentView(R.layout.main);
 
@@ -59,14 +62,15 @@ public class ParachuteActivity extends Activity {
 				int currentGameTimeInSeconds = (progress * MAX_GAME_TIME_SECONDS) / 100;
 				numSecondsTextView.setText(Integer
 						.toString(currentGameTimeInSeconds));
-				numSacksTextView.setText(Integer.toString(ParachuteGameLayer.numSacksInGame(currentGameTimeInSeconds)));
+				numSacksTextView.setText(Integer.toString(ParachuteGameLayer
+						.numSacksInGame(currentGameTimeInSeconds)));
 				newGame.setEnabled(currentGameTimeInSeconds > 0);
 			}
 		};
 
 		final SeekBar timerSeekBar = (SeekBar) findViewById(R.id.timer_seek_bar);
 		timerSeekBar.setOnSeekBarChangeListener(changeListener);
-		
+
 		newGame.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -75,10 +79,13 @@ public class ParachuteActivity extends Activity {
 				playGame((timerSeekBar.getProgress() * MAX_GAME_TIME_SECONDS) / 100);
 				// hide the keyboard when the user starts a new game
 				InputMethodManager im = (InputMethodManager) (getSystemService(Context.INPUT_METHOD_SERVICE));
-				im.hideSoftInputFromWindow(timerSeekBar.getWindowToken(),
-						0);
+				im.hideSoftInputFromWindow(timerSeekBar.getWindowToken(), 0);
 			}
 		});
+
+		// initialize Parse
+		Parse.initialize(this, KeyUtils.PARSE_APPLICATION_ID,
+				KeyUtils.PARSE_CLIENT_ID);
 	}
 
 	@Override
