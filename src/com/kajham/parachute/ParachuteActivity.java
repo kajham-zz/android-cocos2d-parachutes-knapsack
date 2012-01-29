@@ -6,6 +6,8 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -14,13 +16,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 public class ParachuteActivity extends Activity {
-	
+
 	protected CCGLSurfaceView mGlSurfaceView;
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+	/** Called when the activity is first created. */
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 		// get full screen setup and keep screen bright and on when the window
@@ -33,21 +35,46 @@ public class ParachuteActivity extends Activity {
 
 		mGlSurfaceView = new CCGLSurfaceView(this);
 		setContentView(R.layout.main);
-		
-		Button newGame = (Button) findViewById(R.id.start_game_btn);
+
+		final Button newGame = (Button) findViewById(R.id.start_game_btn);
 		final EditText timerValueEditText = (EditText) findViewById(R.id.timer_value_edit_text);
 		newGame.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				ParachuteActivity.this.setContentView(mGlSurfaceView);
-				playGame(Integer.parseInt(timerValueEditText.getText().toString()));
+				playGame(Integer.parseInt(timerValueEditText.getText()
+						.toString()));
 			}
 		});
-				
-    
-    }
-    
+
+		// text watcher to ensure that the new game button is disabled 
+		// until some value is entered for the game timer
+		TextWatcher textWatcher = new TextWatcher() {
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				if (s == null || s.toString().equals("")) {
+					newGame.setEnabled(false);
+				} else {
+					newGame.setEnabled(true);
+				}
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		};
+		timerValueEditText.addTextChangedListener(textWatcher);
+
+	}
+
 	@Override
 	protected void onStart() {
 		super.onStart();
