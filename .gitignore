@@ -1,5 +1,6 @@
 bin/
 gen/
+src/com/kajham/parachute/utils/KeyUtils.java
 .settings/
 .project
 .classpath
