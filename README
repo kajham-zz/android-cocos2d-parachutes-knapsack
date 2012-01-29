@@ -1,0 +1,9 @@
+The purpose of this project is to explore how to use cocos2d on android. 
+
+I'm using cocos2d for android ported from cocos2d for iphone as an open source project here: http://code.google.com/p/cocos2d-android-1/
+
+This project is an android application inspired from the 8-bit parachutes game (http://www.youtube.com/watch?v=2H0Thj5IyiY) I used to play as a kid. 
+
+I've combined the parachutes game with the dynamic programming knapsack problem (http://en.wikipedia.org/wiki/Knapsack_problem) such that you have a limited number of sacks or bullets to score a maximum score in a limited amount of time. If you shoot done a negative number, your score decreases. As simple as that!
+
+
