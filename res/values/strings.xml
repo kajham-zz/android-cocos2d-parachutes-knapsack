@@ -4,6 +4,6 @@
     <string name="hello">Hello World, ParachuteActivity!</string>
     <string name="app_name">Parachute</string>
     <string name="welcome">Parachutes and knap sacks.</string>
-    <string name="enter_timer_value">Enter game duration in seconds</string>
+    <string name="enter_timer_value">Game time in seconds</string>
 	<string name="new_game">New Game</string>
 </resources>

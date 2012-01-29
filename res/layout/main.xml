@@ -14,17 +14,12 @@
         android:textColor="@android:color/black"
         android:layout_gravity="center_horizontal|top" />
     
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/enter_timer_value"
-        android:textColor="@android:color/black"
-        android:gravity="center_horizontal"/>
-    
     <EditText
         android:id="@+id/timer_value_edit_text"
-        android:layout_height='wrap_content'
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:hint="@string/enter_timer_value"
+        android:inputType="number"
         android:gravity="center_horizontal"/>
     
     <Button
