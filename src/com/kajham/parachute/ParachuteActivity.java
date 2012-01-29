@@ -6,6 +6,7 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -35,7 +36,7 @@ public class ParachuteActivity extends Activity {
 						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN
 						| WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
+		
 		mGlSurfaceView = new CCGLSurfaceView(this);
 		setContentView(R.layout.main);
 
@@ -95,19 +96,19 @@ public class ParachuteActivity extends Activity {
 
 	@Override
 	protected void onPause() {
-		super.onPause();
 		CCDirector.sharedDirector().pause();
+		super.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		super.onResume();
 		CCDirector.sharedDirector().resume();
+		super.onResume();
 	}
 
 	@Override
 	protected void onStop() {
-		super.onStop();
 		CCDirector.sharedDirector().end();
+		super.onStop();
 	}
 }
