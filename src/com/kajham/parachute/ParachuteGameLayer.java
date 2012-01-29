@@ -41,6 +41,7 @@ public class ParachuteGameLayer extends CCColorLayer {
 
 	private static int TAG_TARGET = 1;
 	private static int TAG_PROJECTILE = 2;
+	private static int MIN_SACKS_FOR_GAME = 5;
 
 	public static CCScene scene(int timerValue) {
 		CCScene scene = CCScene.node();
@@ -77,10 +78,9 @@ public class ParachuteGameLayer extends CCColorLayer {
 		mTimerLabel.setColor(ccColor3B.ccBLUE);
 		addChild(mTimerLabel);
 
-		mSacksRemaining = (int) (mTimerValue / 1000);
+		mSacksRemaining = Math.max((int) (mTimerValue / 3000), MIN_SACKS_FOR_GAME);
 		mSacksRemainingLabel = CCLabel.makeLabel(
-				getSacksRemainingString((int) (mTimerValue / 1000)),
-				"DroidSans", 40.0f);
+				getSacksRemainingString(mSacksRemaining), "DroidSans", 40.0f);
 		mSacksRemainingLabel.setPosition(CGPoint.ccp(
 				mTimerLabel.getPosition().x
 						+ mSacksRemainingLabel.getContentSize().width,

@@ -5,6 +5,7 @@ import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.opengl.CCGLSurfaceView;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -45,6 +47,9 @@ public class ParachuteActivity extends Activity {
 				ParachuteActivity.this.setContentView(mGlSurfaceView);
 				playGame(Integer.parseInt(timerValueEditText.getText()
 						.toString()));
+				// hide the keyboard when the user starts a new game
+				InputMethodManager im = (InputMethodManager) (getSystemService(Context.INPUT_METHOD_SERVICE));
+				im.hideSoftInputFromWindow(timerValueEditText.getWindowToken(), 0);
 			}
 		});
 
