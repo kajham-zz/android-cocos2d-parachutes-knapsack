@@ -7,19 +7,20 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
+import android.widget.TextView;
 
 public class ParachuteActivity extends Activity {
 
 	protected CCGLSurfaceView mGlSurfaceView;
+	private static int MAX_GAME_TIME_SECONDS = 300;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -39,45 +40,44 @@ public class ParachuteActivity extends Activity {
 		setContentView(R.layout.main);
 
 		final Button newGame = (Button) findViewById(R.id.start_game_btn);
-		final EditText timerValueEditText = (EditText) findViewById(R.id.timer_value_edit_text);
+		final TextView numSecondsTextView = (TextView) findViewById(R.id.num_seconds_text_view);
+		final TextView numSacksTextView = (TextView) findViewById(R.id.num_sacks_text_view);
+		OnSeekBarChangeListener changeListener = new OnSeekBarChangeListener() {
+
+			@Override
+			public void onStopTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onStartTrackingTouch(SeekBar seekBar) {
+			}
+
+			@Override
+			public void onProgressChanged(SeekBar seekBar, int progress,
+					boolean fromUser) {
+				int currentGameTimeInSeconds = (progress * MAX_GAME_TIME_SECONDS) / 100;
+				numSecondsTextView.setText(Integer
+						.toString(currentGameTimeInSeconds));
+				numSacksTextView.setText(Integer.toString(ParachuteGameLayer.numSacksInGame(currentGameTimeInSeconds)));
+				newGame.setEnabled(currentGameTimeInSeconds > 0);
+			}
+		};
+
+		final SeekBar timerSeekBar = (SeekBar) findViewById(R.id.timer_seek_bar);
+		timerSeekBar.setOnSeekBarChangeListener(changeListener);
+		
 		newGame.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				ParachuteActivity.this.setContentView(mGlSurfaceView);
-				playGame(Integer.parseInt(timerValueEditText.getText()
-						.toString()));
+				playGame((timerSeekBar.getProgress() * MAX_GAME_TIME_SECONDS) / 100);
 				// hide the keyboard when the user starts a new game
 				InputMethodManager im = (InputMethodManager) (getSystemService(Context.INPUT_METHOD_SERVICE));
-				im.hideSoftInputFromWindow(timerValueEditText.getWindowToken(), 0);
+				im.hideSoftInputFromWindow(timerSeekBar.getWindowToken(),
+						0);
 			}
 		});
-
-		// text watcher to ensure that the new game button is disabled 
-		// until some value is entered for the game timer
-		TextWatcher textWatcher = new TextWatcher() {
-
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before,
-					int count) {
-				if (s == null || s.toString().equals("")) {
-					newGame.setEnabled(false);
-				} else {
-					newGame.setEnabled(true);
-				}
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count,
-					int after) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		};
-		timerValueEditText.addTextChangedListener(textWatcher);
-
 	}
 
 	@Override

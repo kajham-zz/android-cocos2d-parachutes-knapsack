@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="hello">Hello World, ParachuteActivity!</string>
-    <string name="app_name">Parachute</string>
+	<string name="app_name">Parachutes</string>
     <string name="welcome">Parachutes and knap sacks.</string>
-    <string name="enter_timer_value">Game time in seconds</string>
+    <string name="will_be_playing">Game will last</string>
+    <string name="seconds">seconds</string>
+    <string name="you_will_have">You will have</string>
+    <string name="sacks">sacks</string>
 	<string name="new_game">New Game</string>
 </resources>

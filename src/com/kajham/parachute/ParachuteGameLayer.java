@@ -32,7 +32,7 @@ public class ParachuteGameLayer extends CCColorLayer {
 	private CCLabel mScoreLabel;
 	private int mScore;
 
-	private long mTimerValue = 10000L;
+	private long mTimerValueInMillis = 10000L;
 	private long mStartTime;
 	private CCLabel mTimerLabel;
 
@@ -51,9 +51,9 @@ public class ParachuteGameLayer extends CCColorLayer {
 		return scene;
 	}
 
-	public ParachuteGameLayer(ccColor4B color, int timerValue) {
+	public ParachuteGameLayer(ccColor4B color, int timerValueInSeconds) {
 		super(color);
-		mTimerValue = timerValue * 1000L;
+		mTimerValueInMillis = timerValueInSeconds * 1000L;
 		CGSize winSize = CCDirector.sharedDirector().displaySize();
 
 		// add the canon to the screen
@@ -78,7 +78,7 @@ public class ParachuteGameLayer extends CCColorLayer {
 		mTimerLabel.setColor(ccColor3B.ccBLUE);
 		addChild(mTimerLabel);
 
-		mSacksRemaining = Math.max((int) (mTimerValue / 3000), MIN_SACKS_FOR_GAME);
+		mSacksRemaining = ParachuteGameLayer.numSacksInGame(timerValueInSeconds);
 		mSacksRemainingLabel = CCLabel.makeLabel(
 				getSacksRemainingString(mSacksRemaining), "DroidSans", 40.0f);
 		mSacksRemainingLabel.setPosition(CGPoint.ccp(
@@ -265,11 +265,11 @@ public class ParachuteGameLayer extends CCColorLayer {
 
 	protected String getTimerStringValue(long currTime) {
 		long timeElapsed = currTime - mStartTime;
-		if (timeElapsed > mTimerValue) {
+		if (timeElapsed > mTimerValueInMillis) {
 			CCDirector.sharedDirector().replaceScene(
 					ParachuteGameOverLayer.scene(mScore));
 		}
-		long remainingTime = mTimerValue - timeElapsed;
+		long remainingTime = mTimerValueInMillis - timeElapsed;
 		int minutes = (int) (remainingTime / 60000);
 		int seconds = (int) (remainingTime - minutes * 60000) / 1000;
 
@@ -296,5 +296,9 @@ public class ParachuteGameLayer extends CCColorLayer {
 		CGSize winSize = CCDirector.sharedDirector().displaySize();
 		mTimerLabel.setPosition(CGPoint.ccp(mTimerLabel.getContentSize().width,
 				winSize.height - mTimerLabel.getContentSize().height));
+	}
+	
+	public static int numSacksInGame(int timerInSeconds) {
+		return Math.max((int) (timerInSeconds / 3), MIN_SACKS_FOR_GAME);
 	}
 }
