@@ -7,4 +7,5 @@
     <string name="you_will_have">You will have</string>
     <string name="sacks">sacks</string>
 	<string name="new_game">New Game</string>
+	<string name="goal_of_game">Shoot your way to a maximum score before time or sacks run out! </string>
 </resources>

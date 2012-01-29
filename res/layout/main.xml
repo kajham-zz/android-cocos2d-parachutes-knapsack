@@ -3,7 +3,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@android:color/white"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical" >
 
     <TextView
@@ -11,81 +11,98 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal|top"
         android:text="@string/welcome"
+        android:paddingTop="20dp"
         android:textColor="@android:color/black"
-        android:textSize="20sp" />
+        android:textSize="24sp" />
 
-    <SeekBar
-        android:id="@+id/timer_seek_bar"
-        android:layout_width="200dp"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="0" />
-
-    <LinearLayout
+    <TextView
+        style="@style/GameDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/will_be_playing"
-            style="@style/GameDescription" />
-
-        <TextView
-            android:id="@+id/num_seconds_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="0"
-            style="@style/GameDescription" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="@string/seconds"
-            style="@style/GameDescription" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="5dp"
-        android:layout_gravity="center_horizontal"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/you_will_have"
-            style="@style/GameDescription" />
-
-        <TextView
-            android:id="@+id/num_sacks_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="5"
-            style="@style/GameDescription" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
-            android:text="@string/sacks"
-            style="@style/GameDescription" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/start_game_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:enabled="false"
+        android:paddingTop="15dp"
         android:gravity="center_horizontal"
-        android:text="@string/new_game"
-        android:textColor="@android:color/black" />
+        android:text="@string/goal_of_game" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@android:color/white"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <SeekBar
+            android:id="@+id/timer_seek_bar"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:max="100"
+            android:progress="0" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <TextView
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/will_be_playing" />
+
+            <TextView
+                android:id="@+id/num_seconds_text_view"
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="0" />
+
+            <TextView
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/seconds" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
+            android:paddingTop="5dp" >
+
+            <TextView
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/you_will_have" />
+
+            <TextView
+                android:id="@+id/num_sacks_text_view"
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="5" />
+
+            <TextView
+                style="@style/GameDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:text="@string/sacks" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/start_game_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:enabled="false"
+            android:gravity="center_horizontal"
+            android:text="@string/new_game"
+            android:textColor="@android:color/black" />
+    </LinearLayout>
 
 </LinearLayout>
