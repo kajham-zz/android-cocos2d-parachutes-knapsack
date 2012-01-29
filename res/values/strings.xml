@@ -7,5 +7,10 @@
     <string name="you_will_have">You will have</string>
     <string name="sacks">sacks</string>
 	<string name="new_game">New Game</string>
+	<string name="loading_high_scores">Loading high scores</string>
 	<string name="goal_of_game">Shoot your way to a maximum score before time or sacks run out! </string>
+	<string name="top_ten_scores">Top Ten Scores</string>
+	<string name="your_score">Your Score:</string>
+	<string name="your_name">Your Name:</string>
+	<string name="upload_score">Upload Score</string>
 </resources>

@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.kajham.parachute.utils.KeyUtils;
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 public class ParachuteActivity extends Activity {
 

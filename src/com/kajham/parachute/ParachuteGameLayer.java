@@ -20,6 +20,7 @@ import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
 import org.cocos2d.types.ccColor4B;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 
 public class ParachuteGameLayer extends CCColorLayer {
@@ -139,8 +140,7 @@ public class ParachuteGameLayer extends CCColorLayer {
 		updateSacksRemainingLabel();
 
 		if (mSacksRemaining == 0) {
-			CCDirector.sharedDirector().replaceScene(
-					ParachuteGameOverLayer.scene(mScore));
+			CCDirector.sharedDirector().getActivity().startActivity(getHighScoreIntent());
 			return true;
 		}
 
@@ -266,9 +266,9 @@ public class ParachuteGameLayer extends CCColorLayer {
 	protected String getTimerStringValue(long currTime) {
 		long timeElapsed = currTime - mStartTime;
 		if (timeElapsed > mTimerValueInMillis) {
-			CCDirector.sharedDirector().replaceScene(
-					ParachuteGameOverLayer.scene(mScore));
+			CCDirector.sharedDirector().getActivity().startActivity(getHighScoreIntent());
 		}
+
 		long remainingTime = mTimerValueInMillis - timeElapsed;
 		int minutes = (int) (remainingTime / 60000);
 		int seconds = (int) (remainingTime - minutes * 60000) / 1000;
@@ -296,6 +296,12 @@ public class ParachuteGameLayer extends CCColorLayer {
 		CGSize winSize = CCDirector.sharedDirector().displaySize();
 		mTimerLabel.setPosition(CGPoint.ccp(mTimerLabel.getContentSize().width,
 				winSize.height - mTimerLabel.getContentSize().height));
+	}
+	
+	private Intent getHighScoreIntent() {
+		Intent highScoresIntent = new Intent(CCDirector.sharedDirector().getActivity(), ParachuteHighScoresActivity.class);
+		highScoresIntent.putExtra("HIGH_SCORE", mScore);
+		return highScoresIntent;
 	}
 	
 	public static int numSacksInGame(int timerInSeconds) {
